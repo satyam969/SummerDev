@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from './store/auth';
 
 
 function NavScrollExample() {
 
   const [search,setSearch]=useState("");
-
+const[filter,setFilter]=useState([]);
 
   const{isLoggedIn}=useAuth();
+  const {question}=useAuth();
+
+  const navigate=useNavigate();
+
+  const API = import.meta.env.VITE_APP_URI_API;
 
   const handleInput=(e)=>{
 
@@ -22,6 +27,39 @@ function NavScrollExample() {
 console.log(search);
     
   }
+
+
+  const searchResult = () => {
+    if (question) {
+      const filteredQuestions = question.filter(questio => questio.title.toLowerCase().includes(search.toLowerCase()));
+      if(filteredQuestions){
+        setFilter(filteredQuestions);
+      }
+    }
+  }
+
+  useEffect(() => {
+    searchResult();
+  }, [search]);
+
+console.log(filter)
+
+  const handleSearch=(e)=>{
+e.preventDefault();
+
+
+
+
+
+  }
+
+
+  const getsinglequestion=(id)=>{
+
+    navigate(`/${id}`);
+  }
+
+
 
 
   
@@ -60,6 +98,15 @@ console.log(search);
               className="search me-2"
               aria-label="Search"
             />
+            <div className="matchres">
+
+
+            {filter.map((filt) => (
+              <Button className='srcres' onClick={()=>getsinglequestion(filt._id)} key={filt._id}>{filt.title}</Button>
+            ))}
+
+
+            </div>
             <Button className="searchbut"variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>

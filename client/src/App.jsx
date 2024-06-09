@@ -10,6 +10,7 @@ import Error from "./pages/notfound";
 import Logout from "./pages/logout";
 import Question from "./pages/questions";
 import AddQuestion from "./pages/addquestion";
+import SingleQuestion from "./pages/question";
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={ <Logout/>}/>
+        <Route path="/:id" element={ <SingleQuestion/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>
     </Router>

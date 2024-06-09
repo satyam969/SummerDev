@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 // import { useAuth } from "./store/auth";
 import { toast } from 'react-toastify';
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useAuth } from "../store/auth";
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -10,8 +11,11 @@ const Contact = () => {
     message: "",
   });
 
-//   const { API, user } = useAuth();
-//   const [userdata, setUserdata] = useState(true);
+  const {  user } = useAuth();
+  
+  const API = import.meta.env.VITE_APP_URI_API;
+
+  const [userdata, setUserdata] = useState(true);
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -26,42 +30,42 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const response = await fetch(`${API}/api/form/contact`, {
-    //     method: 'POST',
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(contact),
-    //   });
+    try {
+      const response = await fetch(`${API}/api/form/contact`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contact),
+      });
 
-    //   if (response.ok) {
-    //     toast.success("Message sent successfully");
-    //     const res_data = await response.json();
-    //     setContact({
-    //       ...contact,
-    //       message: "",
-    //     });
-    //   } else {
-    //     setContact({
-    //       username: "",
-    //       email: "",
-    //       message: "",
-    //     });
-    //   }
-    // } catch (error) {
-    //   toast.error("Message not sent");
-    // }
+      if (response.ok) {
+        toast.success("Message sent successfully");
+        const res_data = await response.json();
+        setContact({
+          ...contact,
+          message: "",
+        });
+      } else {
+        setContact({
+          username: "",
+          email: "",
+          message: "",
+        });
+      }
+    } catch (error) {
+      toast.error("Message not sent");
+    }
   };
 
-//   useEffect(() => {
-//     if (userdata && user) {
-//       setContact({
-//         username: user.userData.username,
-//         email: user.userData.email,
-//         message: "",
-//       });
-//       setUserdata(false);
-//     }
-//   }, [user, userdata]);
+  useEffect(() => {
+    if (userdata && user) {
+      setContact({
+        username: user.userData.username,
+        email: user.userData.email,
+        message: "",
+      });
+      setUserdata(false);
+    }
+  }, [user, userdata]);
 
   return (
     <>

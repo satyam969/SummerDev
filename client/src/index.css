@@ -140,10 +140,35 @@ margin: 1%;
     display: none;
   }
   .comments{
-    height: 35vh;
+    height: 40vh;
     overflow-y: scroll;
   }
   .replies{
     height: 10vh;
     overflow-y: scroll;
+  }
+  h3{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin:  2%;
+    padding: 3%;
+    box-shadow: 2px 2px 3px rgb(52, 150, 167);
+  }
+  .home{
+    margin: 1%;
+padding: 1%;
+box-shadow: 2px 2px 4px rgb(123, 43, 92);
+
+
+  }
+  .matchres{
+
+    position: absolute;
+    top: 28vh;
+    background-color: white;
+  }
+  .srcres{
+
+box-shadow: 1px 1px 4px black;
+
+
   }

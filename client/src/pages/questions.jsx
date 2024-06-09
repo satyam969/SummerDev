@@ -19,6 +19,11 @@ const Question = () => {
 
 
 
+  
+
+
+
+
 
     const handleSubmit = async (e, id, s) => {
 
@@ -223,20 +228,6 @@ const Question = () => {
 
     };
 
-    const getData = async () => {
-        try {
-            const response = await fetch(`${API}/api/auth/questions/getallquestions`, {
-                method: "GET"
-            });
-
-            if (response.ok) {
-                const questions = await response.json();
-                setData(questions.questions);
-            }
-        } catch (error) {
-            console.error("Error fetching questions:", error);
-        }
-    };
 
     const getReplies = async (questionId, commentIndex) => {
         try {
@@ -265,6 +256,25 @@ const Question = () => {
             console.error("Error fetching replies:", error);
         }
     };
+
+
+    
+    const getData = async () => {
+        try {
+            const response = await fetch(`${API}/api/auth/questions/getallquestions`, {
+                method: "GET"
+            });
+
+            if (response.ok) {
+                const questions = await response.json();
+                setData(questions.questions);
+            }
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        }
+    };
+
+  
 
     useEffect(() => {
         getData();

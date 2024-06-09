@@ -25,7 +25,7 @@ const [isloading,setIsloading]=useState(true);
 const authorizationToken = `Bearer ${token}`;
 
 
-const [data,setData]=useState([]);
+const [question,setData]=useState([]);
 // {
 //     _id:"",
 //     service:"",
@@ -120,48 +120,24 @@ const userAuthentication= async ()=>{
     
     };
     
-    
-// getting services using use effect hook
-
-const getServices= async()=>{
-
-try{
-
-    
-
-    const response =await fetch(`${API}/api/data/service`,{
-        method:"GET",}
-    );
-    
-
-    if(response.ok){
-
-        const data=await response.json();
-        // console.log(data);
-      setData(data);
-
-    }
-   
-    
-
-
-
-}catch(error){
-
-    console.log("services front end error")
-}
 
 
 
 
+    const getData = async () => {
+        try {
+            const response = await fetch(`${API}/api/auth/questions/getallquestions`, {
+                method: "GET"
+            });
 
-
-
-
-
-
-}
-
+            if (response.ok) {
+                const questions = await response.json();
+                setData(questions.questions);
+            }
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        }
+    };
 
 
 
@@ -181,14 +157,14 @@ try{
     useEffect(() => {
        
         userAuthentication();
-        getServices();
+        getData();
 
     }, []);
 
     
 
 
-    return <AuthContext.Provider value={{storetokenInLS,LogoutUser,isLoggedIn,isloading,data,authorizationToken,user,API}}>
+    return <AuthContext.Provider value={{storetokenInLS,LogoutUser,isLoggedIn,isloading,question,authorizationToken,user,API}}>
         {children}
     </AuthContext.Provider>
 

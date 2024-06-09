@@ -40,7 +40,7 @@ const id =req.params.id;
 
 // check if question is present
 
-const questionpresent=await Question.findOne(id);
+const questionpresent=await Question.findOne({_id:id});
 
 if(!questionpresent){
   return res.status(500).send("No Such Question Found")
