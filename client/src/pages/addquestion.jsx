@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useAuth } from "../store/auth";
 
 const AddQuestion = () => {
   const [question, setQuestion] = useState({
@@ -14,12 +16,14 @@ const AddQuestion = () => {
   const navigate = useNavigate();
 
 
+  const API = import.meta.env.VITE_APP_URI_API;
+  const{authorizationToken}=useAuth();
 
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
 
-    setUser({
+    setQuestion({
       ...question,
       [name]: value,
     });
@@ -27,27 +31,42 @@ const AddQuestion = () => {
 
   const handleSubmit =  (e) => {
     e.preventDefault();
-//     try {
-//       const response = await fetch(`${API}/api/auth/AddQuestion`, {
-//         method: 'POST',
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify(user),
-//       });
+console.log(question);
+    try {
 
-//       const res_data = await response.json();
-
-//       if (response.ok) {
-//         toast.success("Log In Successful");
-//         storetokenInLS(res_data.token);
-//         setUser({ email: "", password: "" });
-//         navigate("/");
-//       } else {
-//         setUser({ email: "", password: "" });
-//         toast.error(res_data.message ? res_data.message : res_data.extraDetails);
-//       }
-//     } catch (error) {
-//       console.log("Log in data sending error", error);
+      const response =fetch(`${API}/api/auth/questions/newquestion`,{
+        method:"Post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authorizationToken
+      },
+      body:JSON.stringify(question)
+      })
+      
+console.log(response);
     
+
+        toast.success("question added");
+
+
+     
+
+      setQuestion(
+        {
+          title:"",
+          description:"",
+          output:"",
+          tags:""
+       
+        }
+      )
+
+    } catch (error) {
+      console.log(error);
+    }
+
+
+
   };
 
   return (
@@ -105,7 +124,7 @@ const AddQuestion = () => {
                   rows={6}
                 />
               </Form.Group>
-            <Button variant="primary" type="submit" className="mt-4">
+            <Button variant="primary" type="submit" onClick={handleSubmit} className="mt-4">
              Submit
             </Button>
           </Form>

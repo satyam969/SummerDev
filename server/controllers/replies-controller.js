@@ -62,7 +62,7 @@ try {
     
 
 
-        res.status(200).json({response});
+        res.status(200).send({response});
 
  
     

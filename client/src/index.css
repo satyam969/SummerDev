@@ -140,7 +140,7 @@ margin: 1%;
     display: none;
   }
   .comments{
-    height: 30vh;
+    height: 35vh;
     overflow-y: scroll;
   }
   .replies{
