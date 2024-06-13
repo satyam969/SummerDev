@@ -13,7 +13,7 @@ const cors=require("cors")
 
 // ek aur step krna hoga wrna data nhi jyega database pe 
 const corsOptions={
-    origin:"http://localhost:5173",
+    origin:"https://summer-dev-virid.vercel.app",
     methods:"GET,POST,PUT,DELETE,PATCH,HEAD",
     credentials:true,
 }
