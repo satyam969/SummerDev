@@ -18,7 +18,8 @@ const Question = () => {
 
 
 
-
+console.log("environment",API);
+    
   
 
 
